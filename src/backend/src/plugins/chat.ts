@@ -1,12 +1,14 @@
 import fp from 'fastify-plugin';
 import { ChatOpenAI, OpenAIEmbeddings, type OpenAIChatInput, type OpenAIEmbeddingsParams } from '@langchain/openai';
 import { type Message, MessageBuilder, type ChatResponse, type ChatResponseChunk } from '../lib/index.js';
+import { type AppConfig } from './config.js';
 
 export class ChatService {
   tokenLimit: number = 4000;
 
   constructor(
-    private searchClient: SearchClient<any>,
+    private config: AppConfig,
+    private qdrantClient: QdrantClient,
     private chatClient: (options?: Partial<OpenAIChatInput>) => ChatOpenAI,
     private embeddingsClient: (options?: Partial<OpenAIEmbeddingsParams>) => OpenAIEmbeddings,
     private chatGptModel: string,
@@ -30,7 +32,8 @@ export default fp(
 
     const chatService = new ChatService(
       /*
-      searchClient,
+      config,
+      qdrantClient,
       chatClient,
       embeddingsClient,
       config.azureOpenAiChatGptModel,
