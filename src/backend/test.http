@@ -5,7 +5,7 @@
 
 @api_host = http://localhost:3000
 
-# Chat with the bot
+# Chat  with the bot
 POST {{api_host}}/chat
 Content-Type: application/json
 
